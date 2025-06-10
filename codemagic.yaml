@@ -1,0 +1,25 @@
+workflows:
+  ios-cortana-deploy:
+    name: CORTANA iPhone App Store Build
+    environment:
+      vars:
+        XCODE_PROJECT: "CORTANA.xcodeproj"
+        XCODE_SCHEME: "CORTANA"
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: |
+          pod install || true
+      - name: Build IPA
+        script: |
+          xcodebuild clean -project "$XCODE_PROJECT" -scheme "$XCODE_SCHEME" -sdk iphoneos -configuration Release build CODE_SIGN_STYLE=Automatic
+          xcodebuild -exportArchive \
+            -archivePath build/CORTANA.xcarchive \
+            -exportPath build/export \
+            -exportOptionsPlist exportOptions.plist
+    artifacts:
+      - build/export/*.ipa
+    publishing:
+      app_store_connect:
+        api_key: Encrypted
