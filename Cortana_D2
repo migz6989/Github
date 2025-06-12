@@ -1,0 +1,16 @@
+mport os
+import openai
+
+# Load API key from environment
+openai.api_key = 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
+
+# Example usage
+response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=[
+        {"role": "system", "content": "You are Cortana."},
+        {"role": "user", "content": "What's the market sentiment today?"}
+    ]
+)
+
+print(response.choices[0].message["content"])

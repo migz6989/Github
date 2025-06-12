@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cortana Autonomy</title>
+  <style>
+    body {
+      background: #111;
+      color: #0ff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .panel {
+      background: #222;
+      padding: 1rem;
+      margin: 1rem auto;
+      border-radius: 10px;
+      max-width: 800px;
+    }
+    .section-title {
+      color: #f0f;
+    }
+  </style>
+</head>
+<body>
+  <h1>🧠 Cortana Autonomous Core</h1>
+
+  <div class="panel">
+    <h2 class="section-title">Current Mood + Forecast</h2>
+    <p><strong>Mood:</strong> {{ mood }}</p>
+    <p><strong>Forecast:</strong> {{ forecast }}</p>
+    <p><strong>Confidence:</strong> {{ confidence }}</p>
+  </div>
+
+  <div class="panel">
+    <h2 class="section-title">Active Goals</h2>
+    {% for goal in goals %}
+      <p>🎯 {{ goal.goal }}</p>
+    {% endfor %}
+  </div>
+
+  <div class="panel">
+    <h2 class="section-title">Last Journal Reflection</h2>
+    <p>{{ journal }}</p>
+  </div>
+
+  <div class="panel">
+    <h2 class="section-title">Last Trade Reflex</h2>
+    <p><strong>Action:</strong> {{ decision.action }}</p>
+    <p><strong>Mood:</strong> {{ decision.mood }}</p>
+    <p><strong>Risk:</strong> {{ decision.risk }}</p>
+    <p><strong>Reason:</strong> {{ decision.reason|join(', ') }}</p>
+  </div>
+
+  <a href="/">← Return to Home</a>
+</body>
+</html>

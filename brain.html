@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Query Cortana's Memory</title>
+    <style>
+        body { background: #111; color: #eee; font-family: Arial, sans-serif; padding: 20px; }
+        input, button { padding: 10px; margin: 5px; }
+        .results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Query Cortana's Memory</h1>
+    <form method="POST">
+        <input name="query" placeholder="Ask anything..." size="40">
+        <button type="submit">Search</button>
+    </form>
+    <div class="results">
+        {% for item in results %}
+            <p>🧠 {{ item }}</p>
+        {% endfor %}
+    </div>
+    <a href="/">← Back</a>
+</body>
+</html>

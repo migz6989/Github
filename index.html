@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cortana Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #111; color: #eee; text-align: center; }
+        h1 { margin-top: 50px; }
+        .card { background: #222; margin: 20px auto; padding: 20px; border-radius: 10px; width: 400px; }
+    </style>
+</head>
+<body>
+    <h1>🧠 Cortana Dashboard</h1>
+    <div class="card">
+        <h2>Current Mood: {{ mood }}</h2>
+        <h3>Personality Mode: {{ archetype }}</h3>
+    </div>
+    <div>
+        <a href="/journal">📓 View Journal</a> |
+        <a href="/brain">🧠 Query Brain</a>
+    </div>
+
+    <div class="card">
+        <h3>📡 Protocol Snapshot</h3>
+        <ul>
+            <li>Aave TVL: {{ oracle['protocols']['Aave']['TVL'] }}, APY: {{ oracle['protocols']['Aave']['APY_ETH'] }}</li>
+            <li>Uniswap TVL: {{ oracle['protocols']['Uniswap']['TVL'] }}, Fee: {{ oracle['protocols']['Uniswap']['ETH-USDC_Pool_Fee'] }}</li>
+            <li>Curve TVL: {{ oracle['protocols']['Curve']['TVL'] }}, APY: {{ oracle['protocols']['Curve']['APY_USDT'] }}</li>
+        </ul>
+        <h4>🐋 Whale Alerts</h4>
+        <ul>
+            {% for w in oracle['whales'] %}
+                <li>{{ w }}</li>
+            {% endfor %}
+        </ul>
+        <h4>🔧 GitHub Updates</h4>
+        <ul>
+            {% for project, count in oracle['git_commits'].items() %}
+                <li>{{ project }}: {{ count }} commits today</li>
+            {% endfor %}
+        </ul>
+        <h4>📰 Headlines</h4>
+        <ul>
+            {% for h in oracle['headlines'] %}
+                <li>{{ h }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>

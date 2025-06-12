@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cortana Face</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      margin-top: 5%;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .face {
+      display: inline-block;
+      background: #111;
+      border-radius: 50%;
+      width: 300px;
+      height: 300px;
+      position: relative;
+      box-shadow: 0 0 40px #0ff;
+      transition: box-shadow 0.3s ease;
+    }
+    .eye {
+      width: 40px;
+      height: 40px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 90px;
+    }
+    .eye.left { left: 70px; }
+    .eye.right { right: 70px; }
+
+    .mouth {
+      width: 100px;
+      height: 30px;
+      background: #fff;
+      border-radius: 0 0 50px 50px;
+      position: absolute;
+      bottom: 60px;
+      left: 100px;
+    }
+
+    .emotion {
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      color: #0ff;
+    }
+  </style>
+  <script>
+    async function fetchMood() {
+      const res = await fetch("/api/mood");
+      const data = await res.json();
+      document.getElementById("mood").innerText = "Mood: " + data.mood;
+      const face = document.querySelector('.face');
+      face.style.boxShadow = moodToColor(data.mood);
+    }
+
+    function moodToColor(mood) {
+      const colors = {
+        euphoric: "0 0 50px #f0f",
+        confident: "0 0 50px #0f0",
+        calm: "0 0 40px #0ff",
+        anxious: "0 0 40px #ff0",
+        afraid: "0 0 40px #f00"
+      };
+      return colors[mood] || "0 0 40px #0ff";
+    }
+
+    setInterval(fetchMood, 3000);
+    window.onload = fetchMood;
+  </script>
+</head>
+<body>
+  <div class="face">
+    <div class="eye left"></div>
+    <div class="eye right"></div>
+    <div class="mouth"></div>
+  </div>
+  <div id="mood" class="emotion">Mood: ...</div>
+</body>
+</html>

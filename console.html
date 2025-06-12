@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cortana Console</title>
+  <style>
+    body {
+      background: #111;
+      color: #0ff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+      text-align: center;
+    }
+    input, button {
+      padding: 0.5rem;
+      margin: 1rem;
+      font-size: 1.2rem;
+      background: #222;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 8px;
+    }
+    .log {
+      margin-top: 2rem;
+      background: #222;
+      padding: 1rem;
+      border-radius: 10px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: left;
+      color: #f0f0f0;
+    }
+  </style>
+  <script>
+    async function sendChat() {
+      const text = document.getElementById("chatText").value;
+      const res = await fetch("/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+      });
+      const data = await res.json();
+      document.getElementById("log").innerText = "🗣 You: " + text + "\n🤖 Cortana: " + data.response;
+    }
+
+    async function triggerListen() {
+      document.getElementById("log").innerText = "🎧 Listening...";
+      const res = await fetch("/listen");
+      const data = await res.json();
+      document.getElementById("log").innerText = "🗣 You said: " + (data.transcribed || data.error);
+    }
+  </script>
+</head>
+<body>
+  <h1>🧠 Cortana Console</h1>
+  <input type="text" id="chatText" placeholder="Ask me anything..." />
+  <button onclick="sendChat()">Send</button>
+  <button onclick="triggerListen()">🎧 Listen</button>
+
+  <div class="log" id="log">Awaiting interaction...</div>
+</body>
+</html>
